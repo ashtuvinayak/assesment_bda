@@ -1,101 +1,52 @@
 const mongoose = require('mongoose');
 
 const placeSchema = new mongoose.Schema({
-  slug: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  status: {
-    type: String,
-    enum: ['published', 'not published'],
-    default: 'published',
-  },
-  coverImage: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    enum: ['region', 'country', 'city', 'province', 'district'],
-    required: true,
-  },
-  code: {
-    type: String,
-    default: null,
-  },
-  parent: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Place',
-    default: null,
-  },
+  slug: { type: String, required: true },
+  status: { type: String, enum: ['published', 'not published'], default: 'not published' },
+  coverImage: { type: String },
+  type: { type: String, enum: ['region', 'country', 'city', 'province', 'district'] },
+  code: { type: String },
+  parent: { type: mongoose.Schema.Types.ObjectId, ref: 'Place' },
   geo: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      required: true,
-    },
-    coordinates: {
-      type: [Number],
-      required: true,
-    },
+    latitude: { type: Number },
+    longitude: { type: Number }
   },
-  view: {
-    type: Number,
-    default: 0,
-  },
-  createDate: {
-    type: Date,
-    default: Date.now,
-  },
-  updateDate: {
-    type: Date,
-    default: Date.now,
-  },
-  name: {
-    type: Map,
-    of: String,
-    required: true,
-  },
-  description: {
-    type: Map,
-    of: String,
-    required: true,
-  },
-  content: {
-    type: Map,
-    of: String,
-    required: true,
-  },
+  view: { type: Number, default: 0 },
+  createDate: { type: Date, default: Date.now },
+  updateDate: { type: Date, default: Date.now },
+  name: [{ 
+    lang: { type: String },
+    value: { type: String }
+  }],
+  description: [{ 
+    lang: { type: String },
+    value: { type: String }
+  }],
+  content: [{ 
+    lang: { type: String },
+    value: { type: String }
+  }],
   metadata: {
-    title: {
-      type: Map,
-      of: String,
-      required: true,
-    },
-    description: {
-      type: Map,
-      of: String,
-      required: true,
-    },
+    title: [{ 
+      lang: { type: String },
+      value: { type: String }
+    }],
+    description: [{ 
+      lang: { type: String },
+      value: { type: String }
+    }]
   },
-  faqs: [
-    {
-      title: {
-        type: Map,
-        of: String,
-        required: true,
-      },
-      content: {
-        type: Map,
-        of: String,
-        required: true,
-      },
-    },
-  ],
+  faqs: [{
+    title: [{ 
+      lang: { type: String },
+      value: { type: String }
+    }],
+    content: [{ 
+      lang: { type: String },
+      value: { type: String }
+    }]
+  }]
 });
-
-placeSchema.index({ geo: '2dsphere' });
 
 const Place = mongoose.model('Place', placeSchema);
 

@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-const indexRouter = require('./routes/route')
+const indexRouter = require('./routes/indexRoute')
 const connectDB = require('./config/db');
 
 connectDB();

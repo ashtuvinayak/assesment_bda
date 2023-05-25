@@ -1,77 +1,46 @@
 const mongoose = require('mongoose');
 
 const tourSchema = new mongoose.Schema({
-  slug: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  place: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Place',
-      required: true,
-    },
-  ],
-  price: {
-    type: Number,
-    required: true,
-  },
-  images: [String],
-  languages: [String],
-  coverImage: {
-    type: String,
-    required: true,
-  },
-  duration: {
-    type: String,
-    required: true,
-  },
-  sku: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: Map,
-    of: String,
-    required: true,
-  },
-  content: {
-    type: Map,
-    of: String,
-    required: true,
-  },
-  description: {
-    type: Map,
-    of: String,
-    required: true,
-  },
+  slug: { type: String, required: true },
+  places: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Place' }],
+  price: { type: Number },
+  images: [{ type: String }],
+  languages: [{ type: String }],
+  coverImage: { type: String },
+  duration: { type: String },
+  sku: { type: String },
+  name: [{ 
+    lang: { type: String },
+    value: { type: String }
+  }],
+  content: [{ 
+    lang: { type: String },
+    value: { type: String }
+  }],
+  description: [{ 
+    lang: { type: String },
+    value: { type: String }
+  }],
   metadata: {
-    title: {
-      type: Map,
-      of: String,
-      required: true,
-    },
-    description: {
-      type: Map,
-      of: String,
-      required: true,
-    },
+    title: [{ 
+      lang: { type: String },
+      value: { type: String }
+    }],
+    description: [{ 
+      lang: { type: String },
+      value: { type: String }
+    }]
   },
-  itinerary: [
-    {
-      title: {
-        type: Map,
-        of: String,
-        required: true,
-      },
-      content: {
-        type: Map,
-        of: String,
-        required: true,
-      },
-    },
-  ],
+  itinerary: [{
+    title: [{ 
+      lang: { type: String },
+      value: { type: String }
+    }],
+    content: [{ 
+      lang: { type: String },
+      value: { type: String }
+    }]
+  }]
 });
 
 const Tour = mongoose.model('Tour', tourSchema);
